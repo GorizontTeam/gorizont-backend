@@ -1,0 +1,7 @@
+*.pyc
+logs/django.log
+.idea
+db.sqlite3
+config/local.py
+local.py
+public/
