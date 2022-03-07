@@ -42,7 +42,7 @@ account_activation_token = TokenGenerator()
 def email_veryfication(user, info):
     current_site = get_current_site(info.context)
     mail_subject = 'Аккаунтыгызны активлаштырыгыз'
-    message = render_to_string('base/email/email_template.html', {
+    message = render_to_string('accounts/email/email_template.html', {
         'user': user,
         'domain': DOMAIN,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),  # верно ли?
@@ -72,7 +72,7 @@ def activate_user_account(uidb64, token):
 def send_password_reset_email(info, user):
     current_site = get_current_site(info.context)
     mail_subject = 'Серсүзне яңарту'
-    message = render_to_string('base/email/change_password_email.html', {
+    message = render_to_string('accounts/email/change_password_email.html', {
         'user': user,
         'domain': DOMAIN,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -85,7 +85,7 @@ def change_password(uidb64, token, password, password_repeat):
     errors = None
     ok = False
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
