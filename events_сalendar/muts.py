@@ -9,19 +9,21 @@ from events_сalendar.dots import EventDot
 class EventCreation(graphene.Mutation):
     class Arguments:
         name = String(required=True)
-        dateTime = DateTime(required=True)
+        start_date = DateTime(required=True)
+        finish_date = DateTime(required=False)
 
     ok = Boolean()
     event = Field(EventDot)
     errors = List(String)
 
     @staticmethod
-    def mutate(root, info, name, dateTime):
+    def mutate(root, info, name, start_date, finish_date):
         user = info.context.user
         if user:
             event = Event.objects.create(
                 name=name,
-                date=dateTime,
+                start_date=start_date,
+                finish_date=finish_date,
                 author=user,
             )
         else:
