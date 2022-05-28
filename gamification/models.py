@@ -19,13 +19,16 @@ class Achievement(models.Model):
         return self.name
 
 
-class AchievementUser(models.Model):
+class UserAchievement(models.Model):
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
-    achivement = models.ForeignKey(Achievement, verbose_name='Достижение', on_delete=models.CASCADE)
+    achievement = models.ForeignKey(Achievement, verbose_name='Достижение', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Достигнутое достижение'
         verbose_name_plural = 'Достигнутые достиженияя'
 
     def __str__(self):
-        return self.user
+        return f'{self.user} - {self.achievement}'
+
+
+
