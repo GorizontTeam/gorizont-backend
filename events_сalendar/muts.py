@@ -1,5 +1,4 @@
 import graphene
-from django.db.models import Q
 from graphene import String, Boolean, Field, List, DateTime, Int, ID
 
 from events_сalendar.models import Event

@@ -5,13 +5,14 @@ from gamification.dots import Query as AchievementQuery
 
 from accounts.muts import Mutation as BaseMutation
 from events_сalendar.muts import Mutation as EventsMutation
+from gamification.muts import Mutation as GamificationMutation
 
 
 class Query(BaseQuery, EventQuery, AchievementQuery, graphene.ObjectType):
     pass
 
 
-class Mutation(BaseMutation, EventsMutation, graphene.ObjectType):
+class Mutation(BaseMutation, EventsMutation, GamificationMutation, graphene.ObjectType):
     pass
 
 
