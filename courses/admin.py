@@ -40,11 +40,11 @@ class TaskFileInline(admin.TabularInline):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('name', 'sort', 'type')
-    list_filter = ('type', 'is_last_task')
+    list_display = ('name', 'sort', 'course', 'is_check_point')
+    list_filter = ('is_check_point',)
     fieldsets = (
-        (_('Задание'), {'fields': ('name', 'description', 'video_url')}),
-        (_('Настройки'), {'fields': ('sort', 'type', 'is_last_task')}),
+        (_('Задание'), {'fields': ('name', 'course', 'description', 'video_url')}),
+        (_('Настройки'), {'fields': ('sort', 'is_check_point')}),
         (_('Оценка'), {'fields': ('evaluation_criterion', 'points')}),
         (_('Информация о пользователях'),
          {'fields': ('users_started', 'users_ended',),
@@ -53,15 +53,15 @@ class TaskAdmin(admin.ModelAdmin):
     inlines = [TaskFileInline, ]
 
 
-@admin.register(CheckPoint)
-class CheckPointAdmin(admin.ModelAdmin):
-    list_display = ('name', 'course', 'type')
-    list_filter = ('course', 'type')
-    # fieldsets = (
-    #     (_('Задание'), {'fields': ('name', 'description', 'video_url')}),
-    #     (_('Настройки'), {'fields': ('sort', 'module', 'type', 'is_last_task')}),
-    #     (_('Оценка'), {'fields': ('evaluation_criterion', 'points')}),
-    #     (_('Информация о пользователях'),
-    #      {'fields': ('users_started', 'users_ended',),
-    #       'classes': ['collapse']}),
-    # )
+# @admin.register(CheckPoint)
+# class CheckPointAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'course', 'type')
+#     list_filter = ('course', 'type')
+#     # fieldsets = (
+#     #     (_('Задание'), {'fields': ('name', 'description', 'video_url')}),
+#     #     (_('Настройки'), {'fields': ('sort', 'module', 'type', 'is_last_task')}),
+#     #     (_('Оценка'), {'fields': ('evaluation_criterion', 'points')}),
+#     #     (_('Информация о пользователях'),
+#     #      {'fields': ('users_started', 'users_ended',),
+#     #       'classes': ['collapse']}),
+#     # )

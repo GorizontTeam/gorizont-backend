@@ -65,16 +65,16 @@ class Task(models.Model):
         ('Ручная проверка', 'Ручная проверка'),
     )
     name = models.CharField('Название', max_length=200)
-    # module = models.ForeignKey(Module, verbose_name='Модуль', on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, verbose_name='Курс', on_delete=models.CASCADE, null=True)
     description = models.TextField('Описание')
-    video_url = models.URLField('Ccылка на видео (если есть видео)')
-    type = models.CharField('Тип задания', choices=TASK_TYPES, default=TASK_TYPES[0][0], max_length=23)
+    video_url = models.URLField('Ccылка на видео (если есть видео)', null=True, blank=True)
+    # type = models.CharField('Тип задания', choices=TASK_TYPES, default=TASK_TYPES[0][0], max_length=23)
 
     users_started = models.ManyToManyField(User, blank=True, related_name='task_started')
     users_ended = models.ManyToManyField(User, blank=True, related_name='task_ended')
 
     sort = models.PositiveIntegerField('Сортировка')
-    is_last_task = models.BooleanField('Итоговое задание в этом модуле')
+    is_check_point = models.BooleanField('Это задание чек поинт?', default=False)
 
     evaluation_criterion = models.TextField('Критерия оценки', default='')
     points = models.PositiveIntegerField('Максимальное кол-во баллов', default=0, blank=True)
@@ -97,23 +97,24 @@ class TaskFile(models.Model):
         verbose_name_plural = 'Файлы задания'
 
     def __str__(self):
-        return self.task
+        return self.file.name
 
 
-class CheckPoint(models.Model):
-    СHECK_POINT_TYPES = (
-        ('Автоматическая проверка', 'Автоматическая проверка'),
-        ('Ручная проверка', 'Ручная проверка'),
-    )
-    name = models.CharField('Название', max_length=150)
-    course = models.ForeignKey(Course, verbose_name='Курс', on_delete=models.CASCADE)
-    type = models.CharField('Тип чек-поинта', choices=СHECK_POINT_TYPES, default=СHECK_POINT_TYPES[0][0], max_length=23)
-    task = models.ForeignKey(Task, verbose_name='Задание', on_delete=models.CASCADE, null=True, blank=True)
-    test = models.ForeignKey(Test, verbose_name='Тест', on_delete=models.CASCADE, null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Чек поинт'
-        verbose_name_plural = 'Чек поинты'
-
-    def __str__(self):
-        return self.name
+# class CheckPoint(models.Model):
+#     СHECK_POINT_TYPES = (
+#         ('Автоматическая проверка', 'Автоматическая проверка'),
+#         ('Ручная проверка', 'Ручная проверка'),
+#     )
+#     name = models.CharField('Название', max_length=150)
+#     course = models.ForeignKey(Course, verbose_name='Курс', on_delete=models.CASCADE)
+#     after_task = models.ForeignKey(Task, verbose_name='После задания', on_delete=models.SET_NULL, null=True, related_name='after_task_check_points')
+#     type = models.CharField('Тип чек-поинта', choices=СHECK_POINT_TYPES, default=СHECK_POINT_TYPES[0][0], max_length=23)
+#     task = models.ForeignKey(Task, verbose_name='Задание', on_delete=models.CASCADE, null=True, blank=True, related_name='task_in_check_points')
+#     test = models.ForeignKey(Test, verbose_name='Тест', on_delete=models.CASCADE, null=True, blank=True)
+#
+#     class Meta:
+#         verbose_name = 'Чек поинт'
+#         verbose_name_plural = 'Чек поинты'
+#
+#     def __str__(self):
+#         return '({№ self.sort})' + self.name
