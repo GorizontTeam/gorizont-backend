@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'events_сalendar',
     'media_library',
     'notifications',
+    'test_app',
 ]
 
 MIDDLEWARE = [
