@@ -89,7 +89,7 @@ class Task(models.Model):
 
 
 class TaskFile(models.Model):
-    task = models.ForeignKey(Task, verbose_name='Задание', on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, verbose_name='Задание', on_delete=models.CASCADE, related_name='files')
     file = models.FileField('Файл', upload_to='courses/tasks/files/%Y/%m/%d/')
 
     class Meta:

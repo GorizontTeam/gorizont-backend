@@ -14,6 +14,11 @@ class TaskDot(DjangoObjectType):
         model = Task
 
 
+class TaskFileDot(DjangoObjectType):
+    class Meta:
+        model = TaskFile
+
+
 class Query(graphene.ObjectType):
     course = Field(CourseDot, id=graphene.ID())
     courses = List(
