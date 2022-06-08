@@ -22,51 +22,46 @@ class CourseAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(Module)
-class ModuleAdmin(admin.ModelAdmin):
-    list_display = ('name', 'sort', 'course')
-    list_filter = ('course',)
-    fieldsets = (
-        (_('Модуль'), {'fields': ('name', 'sort', 'course',)}),
-        (_('Информация о пользователях'),
-         {'fields': ('users_started', 'users_ended',),
-          'classes': ['collapse']}),
-    )
+# @admin.register(Module)
+# class ModuleAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'sort', 'course')
+#     list_filter = ('course',)
+#     fieldsets = (
+#         (_('Модуль'), {'fields': ('name', 'sort', 'course',)}),
+#         (_('Информация о пользователях'),
+#          {'fields': ('users_started', 'users_ended',),
+#           'classes': ['collapse']}),
+#     )
+
+class TaskFileInline(admin.TabularInline):
+    model = TaskFile
+    extra = 1
 
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('name', 'sort', 'module', 'type')
-    list_filter = ('type', 'module', 'is_last_task')
+    list_display = ('name', 'sort', 'course', 'is_check_point')
+    list_filter = ('is_check_point',)
     fieldsets = (
-        (_('Задание'), {'fields': ('name', 'description', 'video_url')}),
-        (_('Настройки'), {'fields': ('sort', 'module', 'type', 'is_last_task')}),
+        (_('Задание'), {'fields': ('name', 'course', 'description', 'video_url')}),
+        (_('Настройки'), {'fields': ('sort', 'is_check_point')}),
         (_('Оценка'), {'fields': ('evaluation_criterion', 'points')}),
         (_('Информация о пользователях'),
          {'fields': ('users_started', 'users_ended',),
           'classes': ['collapse']}),
     )
+    inlines = [TaskFileInline, ]
 
 
-class OneRightAnswerOptionsInline(admin.TabularInline):
-    model = OneRightAnswerOptions
-    extra = 3
-
-
-class MultiSelectRightAnswerOptionsInline(admin.TabularInline):
-    model = MultiSelectRightAnswerOptions
-    extra = 3
-
-
-@admin.register(Question)
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('question_text', 'task',)
-    list_filter = ('task',)
-    inlines = (OneRightAnswerOptionsInline,)
-
-
-@admin.register(MultiSelectQuestion)
-class MultiSelectQuestionAdmin(admin.ModelAdmin):
-    list_display = ('question_text', 'task',)
-    list_filter = ('task',)
-    inlines = (MultiSelectRightAnswerOptionsInline,)
+# @admin.register(CheckPoint)
+# class CheckPointAdmin(admin.ModelAdmin):
+#     list_display = ('name', 'course', 'type')
+#     list_filter = ('course', 'type')
+#     # fieldsets = (
+#     #     (_('Задание'), {'fields': ('name', 'description', 'video_url')}),
+#     #     (_('Настройки'), {'fields': ('sort', 'module', 'type', 'is_last_task')}),
+#     #     (_('Оценка'), {'fields': ('evaluation_criterion', 'points')}),
+#     #     (_('Информация о пользователях'),
+#     #      {'fields': ('users_started', 'users_ended',),
+#     #       'classes': ['collapse']}),
+#     # )
