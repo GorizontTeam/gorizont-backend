@@ -7,6 +7,12 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
 
+    img = models.ImageField('Фото', upload_to='user_page_images', height_field=None, width_field=None, max_length=100, null=True, blank=True)
+    bio = models.CharField('Информация о себе', max_length=150, null=True, blank=True)
+    phone = models.BigIntegerField('Номер телефона', null=True, blank=True)
+    city_name = models.CharField('Город', max_length=100, null=True, blank=True)
+
+
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'

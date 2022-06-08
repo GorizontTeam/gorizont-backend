@@ -12,7 +12,7 @@ class Event(models.Model):
     name = models.CharField('Название', max_length=150)
     start_date = models.DateTimeField('Дата и время начала')
     finish_date = models.DateTimeField('Дата и время окончания', null=True, blank=True)
-    author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE, related_name='user_events')
     status = models.CharField('Статус', max_length=10, choices=STATUSES, default='В ожидании')
 
     class Meta:

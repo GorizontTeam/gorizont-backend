@@ -87,6 +87,7 @@ class UpdateUser(graphene.Mutation):
         first_name = graphene.String()
         last_name = graphene.String()
         middle_name = graphene.String()
+        bio = graphene.String()
         email = graphene.String()
         phone = graphene.String()
         city_name = graphene.String()
